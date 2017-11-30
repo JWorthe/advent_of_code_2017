@@ -1,0 +1,9 @@
+[package]
+name = "advent_of_code_2017"
+version = "0.1.0"
+authors = ["Justin Worthe <justin@worthe-it.co.za>"]
+
+[dependencies]
+regex = "0.2.3"
+structopt = "0.1.6"
+structopt-derive = "0.1.6"
