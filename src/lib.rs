@@ -59,3 +59,9 @@ impl AdventArgs {
             .collect()
     }
 }
+
+pub fn parse_space_separated_ints(line: &String) -> Result<Vec<i32>, std::num::ParseIntError> {
+    line.split_whitespace()
+        .map(|x| x.parse::<i32>())
+        .collect()
+}
