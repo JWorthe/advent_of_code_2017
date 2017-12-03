@@ -58,10 +58,92 @@ impl AdventArgs {
             .map(|line| line.trim().to_string())
             .collect()
     }
+
+    pub fn one_number_input(&self) -> Result<i32, std::num::ParseIntError> {
+        self.input[0].parse()
+    }
 }
 
 pub fn parse_space_separated_ints(line: &String) -> Result<Vec<i32>, std::num::ParseIntError> {
     line.split_whitespace()
         .map(|x| x.parse::<i32>())
         .collect()
+}
+
+
+#[derive(Hash, Eq, PartialEq, Debug, Clone, Copy)]
+pub struct Point {
+    pub x: i32,
+    pub y: i32
+}
+
+impl Point {
+    pub fn up(&self) -> Point {
+        Point {
+            y: self.y-1,
+            ..*self
+        }
+    }
+
+    pub fn down(&self) -> Point {
+        Point {
+            y: self.y+1,
+            ..*self
+        }
+    }
+
+    pub fn left(&self) -> Point {
+        Point {
+            x: self.x-1,
+            ..*self
+        }
+    }
+
+    pub fn right(&self) -> Point {
+        Point {
+            x: self.x+1,
+            ..*self
+        }
+    }
+
+    pub fn shift(&self, dir: &Direction) -> Point {
+        use Direction::*;
+        
+        match *dir {
+            Right => self.right(),
+            Left => self.left(),
+            Up => self.up(),
+            Down => self.down()
+        }
+    }
+}
+
+#[derive(Debug)]
+pub enum Direction {
+    Left,
+    Up,
+    Down,
+    Right
+}
+
+impl Direction {
+    pub fn rotate_left(&self) -> Direction {
+        use Direction::*;
+        match *self {
+            Right => Up,
+            Up => Left,
+            Left => Down,
+            Down => Right
+        }
+    }
+
+    pub fn rotate_right(&self) -> Direction {
+        use Direction::*;
+        match *self {
+            Right => Down,
+            Up => Right,
+            Left => Up,
+            Down => Left
+        }
+    }
 }
