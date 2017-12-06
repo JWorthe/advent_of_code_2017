@@ -62,6 +62,9 @@ impl AdventArgs {
     pub fn one_number_input(&self) -> Result<i32, std::num::ParseIntError> {
         self.input[0].parse()
     }
+    pub fn number_per_line_input(&self) -> Result<Vec<i32>, std::num::ParseIntError> {
+        self.input.iter().map(|line| line.parse()).collect()
+    }
 }
 
 pub fn parse_space_separated_ints(line: &String) -> Result<Vec<i32>, std::num::ParseIntError> {
