@@ -5,5 +5,6 @@ authors = ["Justin Worthe <justin@worthe-it.co.za>"]
 
 [dependencies]
 regex = "0.2.3"
+lazy_static = "1.0.0"
 structopt = "0.1.6"
 structopt-derive = "0.1.6"
