@@ -150,3 +150,51 @@ impl Direction {
         }
     }
 }
+
+
+pub fn knot_hash(input: &String) -> String {
+    let suffix: [usize; 5] = [17, 31, 73, 47, 23];
+    let lengths: Vec<usize> = input.as_bytes()
+        .iter().map(|&x| x as usize)
+        .chain(suffix.iter().cloned())
+        .collect();
+
+    let mut position = 0;
+    let mut list: Vec<u32> = (0..256).collect();
+
+    for i in 0..64 {
+        let skip = lengths.len() * i;
+        knot_hash_round(&mut list, &lengths, &mut position, skip);            
+    }
+
+    let mut current_char = 0;
+    let mut result = String::new();
+    for (i, l) in list.iter().enumerate() {
+        current_char = current_char ^ l;
+        if i % 16 == 15 {
+            result.push_str(&format!("{:02x}", current_char));
+            current_char = 0;
+        }
+    }
+    result
+}
+
+fn knot_hash_round(list: &mut Vec<u32>, lengths: &Vec<usize>, position: &mut usize, skip: usize) {
+    for (inner_skip, &length) in lengths.iter().enumerate() {
+        knot_hash_reverse_segment(list, *position, length);
+        *position = (*position + length + skip + inner_skip) % list.len();
+    }
+}
+
+fn knot_hash_reverse_segment(list: &mut Vec<u32>, position: usize, length: usize) {
+    let mut a = position;
+    let mut b = position + length - 1;
+    let len = list.len();
+    while a < b {
+        list.swap(a%len, b%len);
+        
+        a += 1;
+        b -= 1;
+    }
+}
+    
