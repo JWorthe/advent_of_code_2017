@@ -55,7 +55,7 @@ impl AdventArgs {
     fn preprocess_file_lines(lines: Vec<String>) -> Vec<String> {
         lines.iter()
             .filter(|line| line.len() > 0)
-            .map(|line| line.trim().to_string())
+            .map(|line| line.trim_right().to_string())
             .collect()
     }
 
