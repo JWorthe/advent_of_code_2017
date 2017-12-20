@@ -151,6 +151,31 @@ impl Direction {
     }
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Point3d {
+    pub x: i32,
+    pub y: i32,
+    pub z: i32
+}
+
+impl std::ops::Add for Point3d {
+    type Output = Point3d;
+
+    fn add(self, other: Point3d) -> Point3d {
+        Point3d {
+            x: self.x + other.x,
+            y: self.y + other.y,
+            z: self.z + other.z
+        }
+    }
+    
+}
+
+impl Point3d {
+    pub fn manhattan_distance(&self) -> i32 {
+        self.x.abs() + self.y.abs() + self.z.abs()
+    }
+}
 
 pub fn knot_hash(input: &String) -> String {
     let suffix: [usize; 5] = [17, 31, 73, 47, 23];
